@@ -1,0 +1,19 @@
+{
+    "name": "Python 3.10.14 Dev Container",
+    // Use the official slim image with Python 3.10.14
+    "image": "python:3.10.14-slim",
+    
+    // Run these commands after the container is created
+    "postCreateCommand": "pip install --upgrade --quiet langchain-community autogen-agentchat autogen-ext arxiv colorama python-dotenv azure-ai-projects azure-identity opentelemetry-api azure-monitor-opentelemetry rich",
+    
+    // Automatically install VS Code extensions: AZ CLI, Python, and Jupyter
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-azcli",
+                "ms-python.python",
+                "ms-toolsai.jupyter"
+            ]
+        }
+    }
+}
