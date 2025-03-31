@@ -9,8 +9,8 @@ This repository supports the Agents Workshop Dublin and showcases modern AI agen
 • Clear examples that demonstrate agent-based workflows
 
 ## Repository Structure
-• Exercise 1: Building Opinionated Agents with the Azure AI Agent Service
-• Exercise 2: Building a Researcher Agent with Autogen and Magentic One  
+- Exercise 1: Building Opinionated Agents with the Azure AI Agent Service
+- Exercise 2: Building a Researcher Agent with Autogen and Magentic One  
 
 ## Setup and Installation
 1. Clone the repository:  
