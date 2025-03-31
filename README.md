@@ -16,22 +16,20 @@ This repository supports the Agents Workshop Dublin and showcases modern AI agen
 1. Clone the repository:  
     git clone https://github.com/yourusername/agents-workshop-dublin.git  
 2. Navigate to the project folder:  
-    cd agents-workshop-dublin  
-3. Install dependencies:  
-    pip install -r requirements.txt
+    cd agents-workshop-dublin
+
+To begin working, open the repository on GitHub, click the "Code" button, and select "Open with Codespaces". The environment is preconfigured via a devcontainer, so no additional dependency installation is needed.
+
 
 ## Using GitHub Codespaces to Run Jupyter Notebooks
 GitHub Codespaces provides a streamlined, cloud-based development environment. To get started with Jupyter notebooks in Codespaces:
 
 1. Open the repository on GitHub and click the "Code" button.  
 2. Select "Open with Codespaces" to launch or create a new Codespace.  
-3. In the Codespace terminal, install the necessary dependencies:  
-    pip install -r requirements.txt  
-4. Start the Jupyter Notebook server with the following command:  
-    jupyter notebook --ip=0.0.0.0 --no-browser  
-5. Use the generated URL to access the notebook interface in your browser.  
+3. The Codespace will automatically set up the environment, including installing dependencies.  
+4. Navigate to the Jupyter notebook and try to run any og the cells by clicking on it and pressing Shift + Enter.  
+5. This will automatically give you the option to select a kernel. Choose the one that matches your environment (in this case, Python 3.10).  
 
-This setup allows you to experiment interactively without any local configuration.
 
 ## Contributing
 Contributions are welcome! Please submit issues or pull requests to help improve the project.
