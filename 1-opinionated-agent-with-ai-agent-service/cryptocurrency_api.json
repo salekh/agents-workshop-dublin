@@ -1,0 +1,2034 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "description": "",
+      "version": "3.1.0",
+      "title": "CoinGecko Public API V3"
+    },
+    "servers": [
+      {
+        "url": "https://api.coingecko.com/api/v3"
+      }
+    ],
+    "paths": {
+      "/coins/{id}": {
+        "get": {
+          "tags": [
+            "Coins"
+          ],
+          "summary": "Coin Data by ID",
+          "description": "This endpoint allows you to **query all the coin data of a coin (name, price, market .... including exchange tickers) on CoinGecko coin page based on a particular coin id**.",
+          "operationId": "coins_id",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "coin id <br> *refers to [`/coins/list`](/reference/coins-list).",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "bitcoin"
+              }
+            },
+            {
+              "name": "localization",
+              "in": "query",
+              "description": "include all the localized languages in the response, default: true",
+              "required": false,
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "tickers",
+              "in": "query",
+              "description": "include tickers data, default: true",
+              "required": false,
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "market_data",
+              "in": "query",
+              "description": "include market data, default: true",
+              "required": false,
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "community_data",
+              "in": "query",
+              "description": "include community data, default: true",
+              "required": false,
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "developer_data",
+              "in": "query",
+              "description": "include developer data, default: true",
+              "required": false,
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "sparkline",
+              "in": "query",
+              "description": "include sparkline 7 days data, default: false",
+              "required": false,
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Get current data for a coin",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CoinsID"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/coins/{id}/history": {
+        "get": {
+          "tags": [
+            "Coins"
+          ],
+          "summary": "Coin Historical Data by ID",
+          "description": "This endpoint allows you to **query the historical data (price, market cap, 24hrs volume, etc) at a given date for a coin based on a particular coin id**.",
+          "operationId": "coins_id_history",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "coin id <br> *refers to [`/coins/list`](/reference/coins-list).",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "bitcoin"
+              }
+            },
+            {
+              "name": "date",
+              "in": "query",
+              "description": "the date of data snapshot <br> Format: `dd-mm-yyyy`",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "30-12-2023"
+              }
+            },
+            {
+              "name": "localization",
+              "in": "query",
+              "description": "include all the localized languages in response, default: true",
+              "required": false,
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Get historical data (name, price, market, stats) at a given date for a coin",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CoinsHistoricalData"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/coins/{id}/market_chart": {
+        "get": {
+          "tags": [
+            "Coins"
+          ],
+          "summary": "Coin Historical Chart Data by ID",
+          "description": "This endpoint allows you to **get the historical chart data of a coin including time in UNIX, price, market cap and 24hrs volume based on particular coin id**.",
+          "operationId": "coins_id_market_chart",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "coin id <br> *refers to [`/coins/list`](/reference/coins-list).",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "bitcoin"
+              }
+            },
+            {
+              "name": "vs_currency",
+              "in": "query",
+              "description": "target currency of market data <br> *refers to [`/simple/supported_vs_currencies`](/reference/simple-supported-currencies).",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "usd"
+              }
+            },
+            {
+              "name": "days",
+              "in": "query",
+              "description": "data up to number of days ago <br> you may use any integer for number of days",
+              "required": true,
+              "schema": {
+                "type": "string"
+              },
+              "examples": {
+                "value-1": {
+                  "value": "1"
+                },
+                "value-2": {
+                  "value": "365"
+                }
+              }
+            },
+            {
+              "name": "interval",
+              "in": "query",
+              "description": "data interval, leave empty for auto granularity Possible value: daily",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "daily"
+                ]
+              }
+            },
+            {
+              "name": "precision",
+              "in": "query",
+              "description": "decimal place for currency price value",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "full",
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Get historical market data include price, market cap, and 24h volume (granularity auto)",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CoinsMarketChart"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/coins/{id}/ohlc": {
+        "get": {
+          "tags": [
+            "Coins"
+          ],
+          "summary": "Coin OHLC Chart by ID",
+          "description": "This endpoint allows you to **get the OHLC chart (Open, High, Low, Close) of a coin based on particular coin id**.",
+          "operationId": "coins_id_ohlc",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "coin id <br> *refers to [`/coins/list`](/reference/coins-list).",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "bitcoin"
+              }
+            },
+            {
+              "name": "vs_currency",
+              "in": "query",
+              "description": "target currency of price data <br> *refers to [`/simple/supported_vs_currencies`](/reference/simple-supported-currencies).",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "usd"
+              }
+            },
+            {
+              "name": "days",
+              "in": "query",
+              "description": "data up to number of days ago ",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "enum": [
+                  1,
+                  7,
+                  14,
+                  30,
+                  90,
+                  180,
+                  365
+                ]
+              }
+            },
+            {
+              "name": "precision",
+              "in": "query",
+              "description": "decimal place for currency price value",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "full",
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15,
+                  16,
+                  17,
+                  18
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Get coin's OHLC",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CoinsOHLC"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/coins/{id}/tickers": {
+        "get": {
+          "tags": [
+            "Coins"
+          ],
+          "summary": "Coin Tickers by ID",
+          "description": "This endpoint allows you to **query the coin tickers on both centralized exchange (cex) and decentralized exchange (dex) based on a particular coin id**.",
+          "operationId": "coins_id_tickers",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "coin id <br> *refers to [`/coins/list`](/reference/coins-list).",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "bitcoin"
+              }
+            },
+            {
+              "name": "exchange_ids",
+              "in": "query",
+              "description": "exchange id <br> *refers to [`/exchanges/list`](/reference/exchanges-list).",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "example": "binance"
+              }
+            },
+            {
+              "name": "include_exchange_logo",
+              "in": "query",
+              "description": "include exchange logo, default: false",
+              "required": false,
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "page",
+              "in": "query",
+              "description": "page through results",
+              "required": false,
+              "schema": {
+                "type": "integer"
+              }
+            },
+            {
+              "name": "order",
+              "in": "query",
+              "description": "use this to sort the order of responses, default: trust_score_desc",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "trust_score_desc",
+                  "trust_score_asc",
+                  "volume_desc",
+                  "volume_asc"
+                ]
+              }
+            },
+            {
+              "name": "depth",
+              "in": "query",
+              "description": "include 2% orderbook depth, ie. `cost_to_move_up_usd` and `cost_to_move_down_usd` <br> default: false",
+              "required": false,
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Get coin tickers",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/CoinsTickers"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "CoinsID": {
+        },
+        "CoinsDataBase": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "coin id"
+            },
+            "symbol": {
+              "type": "string",
+              "description": "coin symbol"
+            },
+            "name": {
+              "type": "string",
+              "description": "coin name"
+            },
+            "web_slug": {
+              "type": "string",
+              "description": "coin web slug"
+            },
+            "asset_platform_id": {
+              "type": "string",
+              "description": "coin asset platform id"
+            },
+            "platforms": {
+              "type": "object",
+              "description": "coin asset platform and contract address",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "detail_platforms": {
+              "type": "object",
+              "description": "detailed coin asset platform and contract address",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "block_time_in_minutes": {
+              "type": "number",
+              "description": "blockchain block time in minutes"
+            },
+            "hashing_algorithm": {
+              "type": "string",
+              "description": "blockchain hashing algorithm"
+            },
+            "categories": {
+              "type": "array",
+              "description": "coin categories",
+              "items": {
+                "type": "string"
+              }
+            },
+            "preview_listing": {
+              "type": "boolean",
+              "description": "preview listing coin"
+            },
+            "public_notice": {
+              "type": "string",
+              "description": "public notice"
+            },
+            "additional_notices": {
+              "type": "array",
+              "description": "additional notices",
+              "items": {
+                "type": "string"
+              }
+            },
+            "localization": {
+              "type": "object",
+              "description": "coin name localization",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "description": {
+              "type": "object",
+              "description": "coin description",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "links": {
+              "type": "object",
+              "description": "links",
+              "properties": {
+                "homepage": {
+                  "type": "array",
+                  "description": "coin website url",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "whitepaper": {
+                  "type": "array",
+                  "description": "coin whitepaper url",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "blockchain_site": {
+                  "type": "array",
+                  "description": "coin block explorer url",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "official_forum_url": {
+                  "type": "array",
+                  "description": "coin official forum url",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "chat_url": {
+                  "type": "array",
+                  "description": "coin chat url",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "announcement_url": {
+                  "type": "array",
+                  "description": "coin announcement url",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "snapshot_url": {
+                  "type": "string",
+                  "description": "coin snapshot url"
+                },
+                "twitter_screen_name": {
+                  "type": "string",
+                  "description": "coin twitter handle"
+                },
+                "facebook_username": {
+                  "type": "string",
+                  "description": "coin facebook username"
+                },
+                "bitcointalk_thread_identifier": {
+                  "type": "string",
+                  "description": "coin bitcointalk thread identifier"
+                },
+                "telegram_channel_identifier": {
+                  "type": "string",
+                  "description": "coin telegram channel identifier"
+                },
+                "subreddit_url": {
+                  "type": "string",
+                  "description": "coin subreddit url"
+                },
+                "repos_url": {
+                  "type": "object",
+                  "description": "coin repository url",
+                  "properties": {
+                    "github": {
+                      "type": "array",
+                      "description": "coin github repository url",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "bitbucket": {
+                      "type": "array",
+                      "description": "coin bitbucket repository url",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "image": {
+              "type": "object",
+              "description": "coin image url",
+              "properties": {
+                "thumb": {
+                  "type": "string"
+                },
+                "small": {
+                  "type": "string"
+                },
+                "large": {
+                  "type": "string"
+                }
+              }
+            },
+            "country_origin": {
+              "type": "string",
+              "description": "coin country of origin"
+            },
+            "genesis_date": {
+              "type": "string",
+              "description": "coin genesis date",
+              "format": "date-time"
+            },
+            "sentiment_votes_up_percentage": {
+              "type": "number",
+              "description": "coin sentiment votes up percentage"
+            },
+            "sentiment_votes_down_percentage": {
+              "type": "number",
+              "description": "coin sentiment votes down percentage"
+            },
+            "market_cap_rank": {
+              "type": "number",
+              "description": "coin rank by market cap"
+            },
+            "market_data": {
+              "type": "object",
+              "description": "coin market data",
+              "properties": {
+                "current_price": {
+                  "type": "object",
+                  "description": "coin current price in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "total_value_locked": {
+                  "type": "number",
+                  "description": "total value locked"
+                },
+                "mcap_to_tvl_ratio": {
+                  "type": "number",
+                  "description": "market cap to total value locked ratio"
+                },
+                "fdv_to_tvl_ratio": {
+                  "type": "number",
+                  "description": "fully diluted valuation to total value locked ratio"
+                },
+                "roi": {
+                  "type": "number",
+                  "description": "coin return on investment"
+                },
+                "ath": {
+                  "type": "object",
+                  "description": "coin all time high (ath) in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "ath_change_percentage": {
+                  "type": "object",
+                  "description": "coin all time high (ath) change in percentage",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "ath_date": {
+                  "type": "object",
+                  "description": "coin all time high (ath) date",
+                  "properties": {
+                    "btc": {
+                      "type": "string"
+                    },
+                    "eur": {
+                      "type": "string"
+                    },
+                    "usd": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "atl": {
+                  "type": "object",
+                  "description": "coin all time low (atl) in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "atl_change_percentage": {
+                  "type": "object",
+                  "description": "coin all time low (atl) change in percentage",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "atl_date": {
+                  "type": "object",
+                  "description": "coin all time low (atl) date",
+                  "properties": {
+                    "btc": {
+                      "type": "string"
+                    },
+                    "eur": {
+                      "type": "string"
+                    },
+                    "usd": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "market_cap": {
+                  "type": "object",
+                  "description": "coin market cap in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "market_cap_rank": {
+                  "type": "number",
+                  "description": "coin rank by market cap"
+                },
+                "fully_diluted_valuation": {
+                  "type": "object",
+                  "description": "coin fully diluted valuation (fdv) in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "market_cap_fdv_ratio": {
+                  "type": "number",
+                  "description": "market cap to fully diluted valuation ratio"
+                },
+                "total_volume": {
+                  "type": "object",
+                  "description": "coin total trading volume in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "high_24h": {
+                  "type": "object",
+                  "description": "coin 24h price high in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "low_24h": {
+                  "type": "object",
+                  "description": "coin 24h price low in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "price_change_24h": {
+                  "type": "number",
+                  "description": "coin 24h price change in currency"
+                },
+                "price_change_percentage_24h": {
+                  "type": "number",
+                  "description": "coin 24h price change in percentage"
+                },
+                "price_change_percentage_7d": {
+                  "type": "number",
+                  "description": "coin 7d price change in percentage"
+                },
+                "price_change_percentage_14d": {
+                  "type": "number",
+                  "description": "coin 14d price change in percentage"
+                },
+                "price_change_percentage_30d": {
+                  "type": "number",
+                  "description": "coin 30d price change in percentage"
+                },
+                "price_change_percentage_60d": {
+                  "type": "number",
+                  "description": "coin 60d price change in percentage"
+                },
+                "price_change_percentage_200d": {
+                  "type": "number",
+                  "description": "coin 200d price change in percentage"
+                },
+                "price_change_percentage_1y": {
+                  "type": "number",
+                  "description": "coin 1y price change in percentage"
+                },
+                "market_cap_change_24h": {
+                  "type": "number",
+                  "description": "coin 24h market cap change in currency"
+                },
+                "market_cap_change_percentage_24h": {
+                  "type": "number",
+                  "description": "coin 24h market cap change in percentage"
+                },
+                "price_change_percentage_1h_in_currency": {
+                  "type": "object",
+                  "description": "coin 1h price change in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "price_change_percentage_24h_in_currency": {
+                  "type": "object",
+                  "description": "coin 24h price change in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "price_change_percentage_7d_in_currency": {
+                  "type": "object",
+                  "description": "coin 7d price change in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "price_change_percentage_14d_in_currency": {
+                  "type": "object",
+                  "description": "coin 14d price change in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "price_change_percentage_30d_in_currency": {
+                  "type": "object",
+                  "description": "coin 30d price change in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "price_change_percentage_60d_in_currency": {
+                  "type": "object",
+                  "description": "coin 60d price change in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "price_change_percentage_200d_in_currency": {
+                  "type": "object",
+                  "description": "coin 200d price change in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "price_change_percentage_1y_in_currency": {
+                  "type": "object",
+                  "description": "coin 1y price change in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "market_cap_change_24h_in_currency": {
+                  "type": "object",
+                  "description": "coin 24h market cap change in currency",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "market_cap_change_percentage_24h_in_currency": {
+                  "type": "object",
+                  "description": "coin 24h market cap change in percentage",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "total_supply": {
+                  "type": "number",
+                  "description": "coin total supply"
+                },
+                "max_supply": {
+                  "type": "number",
+                  "description": "coin max supply"
+                },
+                "circulating_supply": {
+                  "type": "number",
+                  "description": "coin circulating supply"
+                },
+                "last_updated": {
+                  "type": "string",
+                  "description": "coin market data last updated timestamp",
+                  "format": "date-time"
+                }
+              }
+            },
+            "community_data": {
+              "type": "object",
+              "description": "coin community data",
+              "properties": {
+                "facebook_likes": {
+                  "type": "number",
+                  "description": "coin facebook likes"
+                },
+                "twitter_followers": {
+                  "type": "number",
+                  "description": "coin twitter followers"
+                },
+                "reddit_average_posts_48h": {
+                  "type": "number",
+                  "description": "coin reddit average posts in 48 hours"
+                },
+                "reddit_average_comments_48h": {
+                  "type": "number",
+                  "description": "coin reddit average comments in 48 hours"
+                },
+                "reddit_subscribers": {
+                  "type": "number",
+                  "description": "coin reddit subscribers"
+                },
+                "reddit_accounts_active_48h": {
+                  "type": "number",
+                  "description": "coin reddit active accounts in 48 hours"
+                },
+                "telegram_channel_user_count": {
+                  "type": "number",
+                  "description": "coin telegram channel user count"
+                }
+              }
+            },
+            "developer_data": {
+              "type": "object",
+              "description": "coin developer data",
+              "properties": {
+                "forks": {
+                  "type": "number",
+                  "description": "coin repository forks"
+                },
+                "stars": {
+                  "type": "number",
+                  "description": "coin repository stars"
+                },
+                "subscribers": {
+                  "type": "number",
+                  "description": "coin repository subscribers"
+                },
+                "total_issues": {
+                  "type": "number",
+                  "description": "coin repository total issues"
+                },
+                "closed_issues": {
+                  "type": "number",
+                  "description": "coin repository closed issues"
+                },
+                "pull_requests_merged": {
+                  "type": "number",
+                  "description": "coin repository pull requests merged"
+                },
+                "pull_request_contributors": {
+                  "type": "number",
+                  "description": "coin repository pull request contributors"
+                },
+                "code_additions_deletions_4_weeks": {
+                  "type": "object",
+                  "description": "coin code additions and deletions in 4 weeks",
+                  "properties": {
+                    "additions": {
+                      "type": "number"
+                    },
+                    "deletions": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "commit_count_4_weeks": {
+                  "type": "number",
+                  "description": "coin repository commit count in 4 weeks"
+                },
+                "last_4_weeks_commit_activity_series": {
+                  "type": "array",
+                  "description": "coin repository last 4 weeks commit activity series",
+                  "items": {
+                    "type": "number"
+                  },
+                  "example": []
+                }
+              }
+            },
+            "status_updates": {
+              "type": "array",
+              "description": "coin status updates",
+              "items": {
+                "type": "object"
+              },
+              "example": []
+            },
+            "last_updated": {
+              "type": "string",
+              "description": "coin last updated timestamp",
+              "format": "date-time"
+            },
+            "tickers": {
+              "type": "array",
+              "description": "coin tickers",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "base": {
+                    "type": "string",
+                    "description": "coin ticker base currency"
+                  },
+                  "target": {
+                    "type": "string",
+                    "description": "coin ticker target currency"
+                  },
+                  "market": {
+                    "type": "object",
+                    "description": "coin ticker exchange",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "coin ticker exchange name"
+                      },
+                      "identifier": {
+                        "type": "string",
+                        "description": "coin ticker exchange identifier"
+                      },
+                      "has_trading_incentive": {
+                        "type": "boolean",
+                        "description": "coin ticker exchange trading incentive"
+                      }
+                    }
+                  },
+                  "last": {
+                    "type": "number",
+                    "description": "coin ticker last price"
+                  },
+                  "volume": {
+                    "type": "number",
+                    "description": "coin ticker volume"
+                  },
+                  "converted_last": {
+                    "type": "object",
+                    "description": "coin ticker converted last price",
+                    "properties": {
+                      "btc": {
+                        "type": "number"
+                      },
+                      "eth": {
+                        "type": "number"
+                      },
+                      "usd": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "converted_volume": {
+                    "type": "object",
+                    "description": "coin ticker converted volume",
+                    "properties": {
+                      "btc": {
+                        "type": "number"
+                      },
+                      "eth": {
+                        "type": "number"
+                      },
+                      "usd": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "trust_score": {
+                    "type": "string",
+                    "description": "coin ticker trust score"
+                  },
+                  "bid_ask_spread_percentage": {
+                    "type": "number",
+                    "description": "coin ticker bid ask spread percentage"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "description": "coin ticker timestamp",
+                    "format": "date-time"
+                  },
+                  "last_traded_at": {
+                    "type": "string",
+                    "description": "coin ticker last traded timestamp",
+                    "format": "date-time"
+                  },
+                  "last_fetch_at": {
+                    "type": "string",
+                    "description": "coin ticker last fetch timestamp",
+                    "format": "date-time"
+                  },
+                  "is_anomaly": {
+                    "type": "boolean",
+                    "description": "coin ticker anomaly"
+                  },
+                  "is_stale": {
+                    "type": "boolean",
+                    "description": "coin ticker stale"
+                  },
+                  "trade_url": {
+                    "type": "string",
+                    "description": "coin ticker trade url"
+                  },
+                  "token_info_url": {
+                    "type": "string",
+                    "description": "coin ticker token info url"
+                  },
+                  "coin_id": {
+                    "type": "string",
+                    "description": "coin ticker base currency coin id"
+                  },
+                  "target_coin_id": {
+                    "type": "string",
+                    "description": "coin ticker target currency coin id"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "CoinsHistoricalData": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "coin id"
+            },
+            "symbol": {
+              "type": "string",
+              "description": "coin symbol"
+            },
+            "name": {
+              "type": "string",
+              "description": "coin name"
+            },
+            "localization": {
+              "type": "object",
+              "description": "coin localization",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "image": {
+              "type": "object",
+              "description": "coin image url",
+              "properties": {
+                "thumb": {
+                  "type": "string"
+                },
+                "small": {
+                  "type": "string"
+                }
+              }
+            },
+            "market_data": {
+              "type": "object",
+              "description": "coin market data",
+              "properties": {
+                "current_price": {
+                  "type": "object",
+                  "description": "coin current price",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "market_cap": {
+                  "type": "object",
+                  "description": "coin market cap",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "total_volume": {
+                  "type": "object",
+                  "description": "coin total volume",
+                  "properties": {
+                    "btc": {
+                      "type": "number"
+                    },
+                    "eur": {
+                      "type": "number"
+                    },
+                    "usd": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            },
+            "community_data": {
+              "type": "object",
+              "description": "coin community data",
+              "properties": {
+                "facebook_likes": {
+                  "type": "number",
+                  "description": "coin facebook likes"
+                },
+                "twitter_followers": {
+                  "type": "number",
+                  "description": "coin twitter followers"
+                },
+                "reddit_average_posts_48h": {
+                  "type": "number",
+                  "description": "coin reddit average posts 48h"
+                },
+                "reddit_average_comments_48h": {
+                  "type": "number",
+                  "description": "coin reddit average comments 48h"
+                },
+                "reddit_subscribers": {
+                  "type": "number",
+                  "description": "coin reddit subscribers"
+                },
+                "reddit_accounts_active_48h": {
+                  "type": "number",
+                  "description": "coin reddit accounts active 48h"
+                }
+              }
+            },
+            "developer_data": {
+              "type": "object",
+              "description": "coin developer data",
+              "properties": {
+                "forks": {
+                  "type": "number",
+                  "description": "coin repository forks"
+                },
+                "stars": {
+                  "type": "number",
+                  "description": "coin repository stars"
+                },
+                "subscribers": {
+                  "type": "number",
+                  "description": "coin repository subscribers"
+                },
+                "total_issues": {
+                  "type": "number",
+                  "description": "coin repository total issues"
+                },
+                "closed_issues": {
+                  "type": "number",
+                  "description": "coin repository closed issues"
+                },
+                "pull_requests_merged": {
+                  "type": "number",
+                  "description": "coin repository pull requests merged"
+                },
+                "pull_request_contributors": {
+                  "type": "number",
+                  "description": "coin repository pull request contributors"
+                },
+                "code_additions_deletions_4_weeks": {
+                  "type": "object",
+                  "description": "coin code additions deletions 4 weeks",
+                  "properties": {
+                    "additions": {
+                      "type": "number"
+                    },
+                    "deletions": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "commit_count_4_weeks": {
+                  "type": "number",
+                  "description": "coin commit count 4 weeks"
+                }
+              }
+            },
+            "public_interest_stats": {
+              "type": "object",
+              "description": "coin public interest stats",
+              "properties": {
+                "alexa_rank": {
+                  "type": "number",
+                  "description": "coin alexa rank"
+                },
+                "bing_matches": {
+                  "type": "number",
+                  "description": "coin bing matches"
+                }
+              }
+            }
+          },
+          "example": {
+            "id": "bitcoin",
+            "symbol": "btc",
+            "name": "Bitcoin",
+            "localization": {
+              "en": "Bitcoin",
+              "de": "Bitcoin",
+              "es": "Bitcoin",
+              "fr": "Bitcoin",
+              "it": "Bitcoin",
+              "pl": "Bitcoin",
+              "ro": "Bitcoin",
+              "hu": "Bitcoin",
+              "nl": "Bitcoin",
+              "pt": "Bitcoin",
+              "sv": "Bitcoin",
+              "vi": "Bitcoin",
+              "tr": "Bitcoin",
+              "ru": "Биткоин",
+              "ja": "ビットコイン",
+              "zh": "比特币",
+              "zh-tw": "比特幣",
+              "ko": "비트코인",
+              "ar": "بيتكوين",
+              "th": "บิตคอยน์",
+              "id": "Bitcoin",
+              "cs": "Bitcoin",
+              "da": "Bitcoin",
+              "el": "Bitcoin",
+              "hi": "Bitcoin",
+              "no": "Bitcoin",
+              "sk": "Bitcoin",
+              "uk": "Bitcoin",
+              "he": "Bitcoin",
+              "fi": "Bitcoin",
+              "bg": "Bitcoin",
+              "hr": "Bitcoin",
+              "lt": "Bitcoin",
+              "sl": "Bitcoin"
+            },
+            "image": {
+              "thumb": "https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png?1696501400",
+              "small": "https://assets.coingecko.com/coins/images/1/small/bitcoin.png?1696501400"
+            },
+            "market_data": {
+              "current_price": {
+                "aed": 154530.091081427,
+                "ars": 33947900.261883,
+                "aud": 61738.4056950475,
+                "bch": 165.381674946306,
+                "bdt": 4617857.43751472,
+                "bhd": 15859.4297419179,
+                "bmd": 42074.7071561885,
+                "bnb": 134.15687497174,
+                "brl": 204167.474400698,
+                "btc": 1,
+                "cad": 55797.3728951794,
+                "chf": 35380.4108741032,
+                "clp": 37070945.9743491,
+                "cny": 297872.096782952,
+                "czk": 941726.6142466,
+                "dkk": 284202.024427907,
+                "dot": 5078.18455042231,
+                "eos": 49611.9119761598,
+                "eth": 18.2965432154039,
+                "eur": 38057.7086398657,
+                "gbp": 33025.6578133999,
+                "gel": 113180.962250147,
+                "hkd": 328622.396508053,
+                "huf": 14607917.5775571,
+                "idr": 647533950.604456,
+                "ils": 151504.709263362,
+                "inr": 3501412.9510955,
+                "jpy": 5933586.69083973,
+                "krw": 54466970.6549007,
+                "kwd": 12928.7160149536,
+                "lkr": 13628686.3687709,
+                "ltc": 573.662179787236,
+                "mmk": 88364275.7448308,
+                "mxn": 714058.270089106,
+                "myr": 193333.279382686,
+                "ngn": 37725865.4245248,
+                "nok": 429848.167317426,
+                "nzd": 66531.8087825235,
+                "php": 2330938.69230343,
+                "pkr": 11705926.3598065,
+                "pln": 165640.548626626,
+                "rub": 3755167.36124159,
+                "sar": 157780.151835706,
+                "sek": 423808.006507498,
+                "sgd": 55568.0657411781,
+                "thb": 1438863.97715007,
+                "try": 1240206.60639855,
+                "twd": 1291001.38076227,
+                "uah": 1599892.6750506,
+                "usd": 42074.7071561885,
+                "vef": 4212.94042754915,
+                "vnd": 1021106970.8227,
+                "xag": 1768.32799402537,
+                "xau": 20.3961350410339,
+                "xdr": 31351.757663898,
+                "xlm": 324963.641046826,
+                "xrp": 67529.863610982,
+                "yfi": 5.11694276059855,
+                "zar": 769994.699891437,
+                "bits": 1000195.71393105,
+                "link": 2709.66083650503,
+                "sats": 100019571.393105
+              },
+              "market_cap": {
+                "aed": 3022434823129.84,
+                "ars": 663982757051427,
+                "aud": 1207533794818.66,
+                "bch": 3239927812.61396,
+                "bdt": 90320099015790.6,
+                "bhd": 310192612917.673,
+                "bmd": 822933961870.542,
+                "bnb": 2629923038.04924,
+                "brl": 3993286227042.84,
+                "btc": 19584275,
+                "cad": 1091498460326.99,
+                "chf": 692169755329.313,
+                "clp": 725066019537891,
+                "cny": 5826043276458.69,
+                "czk": 18419113668077,
+                "dkk": 5558672032246.96,
+                "dot": 99489102293.3619,
+                "eos": 971966018054.879,
+                "eth": 358260658.630535,
+                "eur": 744365987728.877,
+                "gbp": 645995753662.719,
+                "gel": 2213692357431.75,
+                "hkd": 6427484562491.77,
+                "huf": 285714442221834,
+                "idr": 12665035966583838,
+                "ils": 2963261756601.54,
+                "inr": 68483700226206.6,
+                "jpy": 116054283764085,
+                "krw": 1065312701660270,
+                "kwd": 252871147803.58,
+                "lkr": 266561780855891,
+                "ltc": 11241964101.6977,
+                "mmk": 1728305874039080,
+                "mxn": 13966176853697.3,
+                "myr": 3781381554795.15,
+                "ngn": 737875507571602,
+                "nok": 8407346818129.71,
+                "nzd": 1301287369358.73,
+                "php": 45590539841760.1,
+                "pkr": 228954757091481,
+                "pln": 3239742879771.2,
+                "rub": 73446851159342,
+                "sar": 3086002357014.53,
+                "sek": 8289208064431.51,
+                "sgd": 1086848883442.42,
+                "thb": 28142561489813.1,
+                "try": 24257046694416.7,
+                "twd": 25250535365752.9,
+                "uah": 31292101755089.6,
+                "usd": 822933961870.542,
+                "vef": 82400377602.0975,
+                "vnd": 19971704184972804,
+                "xag": 34586507200.3442,
+                "xau": 398925467.356364,
+                "xdr": 613205127018.025,
+                "xlm": 6366989968394.3,
+                "xrp": 1322171541704.13,
+                "yfi": 100197984.577011,
+                "zar": 15060230523976,
+                "bits": 19587833186725.1,
+                "link": 53027090934.8881,
+                "sats": 1958783318672510
+              },
+              "total_volume": {
+                "aed": 91203312150.0806,
+                "ars": 20035974370796.5,
+                "aud": 36437868164.374,
+                "bch": 97607892.5371449,
+                "bdt": 2725449072027.67,
+                "bhd": 9360199758.84335,
+                "bmd": 24832397519.0506,
+                "bnb": 79179085.8304717,
+                "brl": 120499184128.796,
+                "btc": 590313.260481799,
+                "cad": 32931483969.889,
+                "chf": 20881438911.7821,
+                "clp": 21879188925189.9,
+                "cny": 175803441475.871,
+                "czk": 555804929370.771,
+                "dkk": 167735395521.931,
+                "dot": 2997133098.58748,
+                "eos": 29280838849.3072,
+                "eth": 10798578.6487541,
+                "eur": 22461574030.7143,
+                "gbp": 19491668952.2309,
+                "gel": 66799149326.2464,
+                "hkd": 193952199202.669,
+                "huf": 8621560094639.22,
+                "idr": 382173081057941,
+                "ils": 89417738606.4736,
+                "inr": 2066526047518,
+                "jpy": 3501989517686,
+                "krw": 32146283560336.6,
+                "kwd": 7630499109.6539,
+                "lkr": 8043620037935.51,
+                "ltc": 338574128.091738,
+                "mmk": 52152396774457.3,
+                "mxn": 421435584775.312,
+                "myr": 114104866600.038,
+                "ngn": 22265720911481.5,
+                "nok": 253695421433.057,
+                "nzd": 39266923884.1294,
+                "php": 1375714772890.61,
+                "pkr": 6908811405778.09,
+                "pln": 97760679200.9487,
+                "rub": 2216291329580.89,
+                "sar": 93121490696.4396,
+                "sek": 250130532110.017,
+                "sgd": 32796147403.4102,
+                "thb": 849214282675.698,
+                "try": 731967149325.999,
+                "twd": 761946110895.665,
+                "uah": 944253057952.188,
+                "usd": 24832397519.0506,
+                "vef": 2486467963.58254,
+                "vnd": 602655037260634,
+                "xag": 1043663204.32594,
+                "xau": 12037753.021335,
+                "xdr": 18503736849.333,
+                "xlm": 191792809959.604,
+                "xrp": 39855973598.8211,
+                "yfi": 3020008.10704923,
+                "zar": 454449139819.002,
+                "bits": 590313260481.799,
+                "link": 1599235730.48563,
+                "sats": 59031326048179.9
+              }
+            },
+            "community_data": {
+              "facebook_likes": null,
+              "twitter_followers": null,
+              "reddit_average_posts_48h": 0,
+              "reddit_average_comments_48h": 0,
+              "reddit_subscribers": null,
+              "reddit_accounts_active_48h": null
+            },
+            "developer_data": {
+              "forks": 36262,
+              "stars": 72871,
+              "subscribers": 3961,
+              "total_issues": 7736,
+              "closed_issues": 7377,
+              "pull_requests_merged": 11204,
+              "pull_request_contributors": 846,
+              "code_additions_deletions_4_weeks": {
+                "additions": 973,
+                "deletions": -290
+              },
+              "commit_count_4_weeks": 163
+            },
+            "public_interest_stats": {
+              "alexa_rank": null,
+              "bing_matches": null
+            }
+          }
+        },
+        "CoinsMarketChart": {
+          "type": "object",
+          "properties": {
+            "prices": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              },
+              "example": [
+                [
+                  1711843200000,
+                  69702.3087473573
+                ],
+                [
+                  1711929600000,
+                  71246.9514406015
+                ],
+                [
+                  1711983682000,
+                  68887.7495158568
+                ]
+              ]
+            },
+            "market_caps": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              },
+              "example": [
+                [
+                  1711843200000,
+                  1370247487960.09
+                ],
+                [
+                  1711929600000,
+                  1401370211582.37
+                ],
+                [
+                  1711983682000,
+                  1355701979725.16
+                ]
+              ]
+            },
+            "total_volumes": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              },
+              "example": [
+                [
+                  1711843200000,
+                  16408802301.8374
+                ],
+                [
+                  1711929600000,
+                  19723005998.215
+                ],
+                [
+                  1711983682000,
+                  30137418199.6431
+                ]
+              ]
+            }
+          }
+        },
+        "CoinsOHLC": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "example": [
+            [
+              1709395200000,
+              61942,
+              62211,
+              61721,
+              61845
+            ],
+            [
+              1709409600000,
+              61828,
+              62139,
+              61726,
+              62139
+            ],
+            [
+              1709424000000,
+              62171,
+              62210,
+              61821,
+              62068
+            ]
+          ]
+        },
+        "CoinsTickers": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "coin name"
+            },
+            "tickers": {
+              "type": "array",
+              "description": "list of tickers",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "base": {
+                    "type": "string",
+                    "description": "coin ticker base currency"
+                  },
+                  "target": {
+                    "type": "string",
+                    "description": "coin ticker target currency"
+                  },
+                  "market": {
+                    "type": "object",
+                    "description": "coin ticker exchange",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "exchange name"
+                      },
+                      "identifier": {
+                        "type": "string",
+                        "description": "exchange identifier"
+                      },
+                      "has_trading_incentive": {
+                        "type": "boolean",
+                        "description": "exchange trading incentive"
+                      },
+                      "logo": {
+                        "type": "string",
+                        "description": "exchange image url"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "identifier",
+                      "has_trading_incentive"
+                    ]
+                  },
+                  "last": {
+                    "type": "number",
+                    "description": "coin ticker last price"
+                  },
+                  "volume": {
+                    "type": "number",
+                    "description": "coin ticker volume"
+                  },
+                  "cost_to_move_up_usd": {
+                    "type": "number",
+                    "description": "coin ticker cost to move up in usd"
+                  },
+                  "cost_to_move_down_usd": {
+                    "type": "number",
+                    "description": "coin ticker cost to move down in usd"
+                  },
+                  "converted_last": {
+                    "type": "object",
+                    "description": "coin ticker converted last price",
+                    "properties": {
+                      "btc": {
+                        "type": "number"
+                      },
+                      "eth": {
+                        "type": "number"
+                      },
+                      "usd": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "converted_volume": {
+                    "type": "object",
+                    "description": "coin ticker converted volume",
+                    "properties": {
+                      "btc": {
+                        "type": "number"
+                      },
+                      "eth": {
+                        "type": "number"
+                      },
+                      "usd": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "trust_score": {
+                    "type": "string",
+                    "description": "coin ticker trust score"
+                  },
+                  "bid_ask_spread_percentage": {
+                    "type": "number",
+                    "description": "coin ticker bid ask spread percentage"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "description": "coin ticker timestamp"
+                  },
+                  "last_traded_at": {
+                    "type": "string",
+                    "description": "coin ticker last traded timestamp"
+                  },
+                  "last_fetch_at": {
+                    "type": "string",
+                    "description": "coin ticker last fetch timestamp"
+                  },
+                  "is_anomaly": {
+                    "type": "boolean",
+                    "description": "coin ticker anomaly"
+                  },
+                  "is_stale": {
+                    "type": "boolean",
+                    "description": "coin ticker stale"
+                  },
+                  "trade_url": {
+                    "type": "string",
+                    "description": "coin ticker trade url"
+                  },
+                  "token_info_url": {
+                    "type": "string",
+                    "description": "coin ticker token info url",
+                    "nullable": true
+                  },
+                  "coin_id": {
+                    "type": "string",
+                    "description": "coin ticker base currency coin id"
+                  },
+                  "target_coin_id": {
+                    "type": "string",
+                    "description": "coin ticker target currency coin id"
+                  }
+                }
+              }
+            }
+          },
+          "example": {
+            "name": "Bitcoin",
+            "tickers": [
+              {
+                "base": "BTC",
+                "target": "USDT",
+                "market": {
+                  "name": "Binance",
+                  "identifier": "binance",
+                  "has_trading_incentive": false,
+                  "logo": "https://assets.coingecko.com/markets/images/52/small/binance.jpg?1706864274"
+                },
+                "last": 69476,
+                "volume": 20242.03975,
+                "cost_to_move_up_usd": 19320706.3958517,
+                "cost_to_move_down_usd": 16360235.3694131,
+                "converted_last": {
+                  "btc": 1.000205,
+                  "eth": 20.291404,
+                  "usd": 69498
+                },
+                "converted_volume": {
+                  "btc": 20249,
+                  "eth": 410802,
+                  "usd": 1406996874
+                },
+                "trust_score": "green",
+                "bid_ask_spread_percentage": 0.010014,
+                "timestamp": "2024-04-08T04:02:01+00:00",
+                "last_traded_at": "2024-04-08T04:02:01+00:00",
+                "last_fetch_at": "2024-04-08T04:03:00+00:00",
+                "is_anomaly": false,
+                "is_stale": false,
+                "trade_url": "https://www.binance.com/en/trade/BTC_USDT?ref=37754157",
+                "token_info_url": null,
+                "coin_id": "bitcoin",
+                "target_coin_id": "tether"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
