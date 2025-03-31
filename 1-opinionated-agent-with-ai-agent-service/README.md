@@ -66,6 +66,19 @@ AI Agents are autonomous or semi-autonomous programs designed to perform tasks b
 
 In this exercise, the Cryptocurrency Agent serves as a hands-on example of an AI-driven solution interfacing with Azure services to perform complex data extraction and visualization tasks.
 
+## Interactive Demo
+
+You can now use our agent to interact with the CoinGecko cryptocurrency API. For example, you can run the following command to fetch coin data:
+
+```bash
+# Example API call using the cryptocurrency agent
+curl "https://api.coingecko.com/api/v3/coins/bitcoin" -G --data-urlencode "localization=true" --data-urlencode "tickers=true" --data-urlencode "market_data=true"
+```
+
+Additionally, our Code Interpreter is capable of generating image files. Below is an example of a candlestick chart generated on-the-fly:
+
+![Candlestick Chart](./candlestick.png)
+
 ## Summary
 
 This exercise provided a comprehensive look at:
